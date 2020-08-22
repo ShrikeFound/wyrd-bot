@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const {prefix,token,suits,values} = require('./config.json');
 bot = new Discord.Client();
 const fs = require('fs');
+const hands = require("./hands.json");
 
 
 bot.commands = new Discord.Collection();
@@ -63,3 +64,20 @@ bot.on('message',message =>{
 
 
 bot.login(token);
+
+
+
+// else if(command ==="write"){
+//   new_card = args.join();
+//   if (hands.hasOwnProperty(message.author.username)){
+//     hand = hands[message.author.username]
+//   } else{
+//     hands[message.author.username] = []; 
+//     hand = hands[message.author.username]
+//   }
+//   hand.push(new_card);
+
+//   fs.writeFile("./hands.json",JSON.stringify(hands,null,4),err =>{
+//     if (err) throw err;
+//     message.channel.send("written");
+//   });

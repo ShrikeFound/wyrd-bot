@@ -6,12 +6,9 @@ module.exports = {
     if (!numFlips > 0) numFlips = 1;
     
     var cards = [];
-    console.log(typeof(numFlips));
-    console.log(numFlips);
     for (var i = 0; i < numFlips; i++) {
       var card = deck.shift();
       cards.push(card);
-      console.log(deck.length);
       if(deck.length <= 0){
         bot.commands.get('shuffle').execute(message,args);
       }
@@ -31,5 +28,7 @@ module.exports = {
     cards.forEach(card =>{
       discard.push(card);
     });
+    console.log(discard.length);
+    console.log(deck.length);
   }
 }
