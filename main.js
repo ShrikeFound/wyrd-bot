@@ -37,6 +37,7 @@ function createDeck(suits,values,center,descendant){
   var deck = {};
   deck.cards = new Array();
   deck.discard = new Array();
+  deck.hand = new Array();
   if (arguments.length == 4) {
     //create defining cards
     definining_values = [1, 5, 9, 13];
