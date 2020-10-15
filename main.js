@@ -103,6 +103,19 @@ function flip(deck, numflips) {
   return flippedCards;
 }
 
+//function for drawing cards into control hand
+function draw(deck, numdraw) {
+  for (var i = 0; i < numdraw; i++){
+    if (deck.cards.length <= 0) {
+      deck.cards = deck.discard;
+      shuffle(deck);
+    }
+    deck.hand.unshift(deck.cards.shift());
+  }
+  console.log(deck.hand);
+}
+
+
 
 fateDeck  = createDeck(defaultSuits, defaultValues);
 twistDeck = createDeck("rams", "tomes", "crows", "masks");
