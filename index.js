@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const {prefix,token,suits,values} = require('./config.json');
 bot = new Discord.Client();
 const fs = require('fs');
-const hands = require("./hands.json");
 
 
 bot.commands = new Discord.Collection();
@@ -23,17 +22,15 @@ function initializeDeck(){
       deck.push(card);
     }
   }
-  console.log(deck.length);
+  // console.log(deck.length);
   return deck;
 }
-
-
 
 bot.once('ready',()=>{
   deck = initializeDeck();
   discard = new Array();
+  // console.log(deck);
   console.log("bot ready!");
-  console.log(deck);
 });
 
 
@@ -42,18 +39,22 @@ bot.once('ready',()=>{
 bot.on('message',message =>{
   if(!message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).split(" ");
-  const command = args.shift().toLowerCase();
-  console.log(command);  
-  if(command === 'flip'){
-    bot.commands.get('flip').execute(message,args);
-  }else if(command ==="shuffle"){
-    bot.commands.get('shuffle').execute(message,args);
+  const commandName = args.shift().toLowerCase();
+  console.log(commandName);  
+  
+  //if command name doesn't exist exit
+  if (!bot.commands.has(commandName)) return;
+  
+  const command = bot.commands.get(commandName);
+
+  try {
+    command.execute(message, args);
+  } catch (error) {
+    console.error(error);
+    message.reply('I had trouble following that. Please check your message or let the bot dude know.');
   }
+
 });
-
-
-
-
 
 
 
@@ -64,20 +65,3 @@ bot.on('message',message =>{
 
 
 bot.login(token);
-
-
-
-// else if(command ==="write"){
-//   new_card = args.join();
-//   if (hands.hasOwnProperty(message.author.username)){
-//     hand = hands[message.author.username]
-//   } else{
-//     hands[message.author.username] = []; 
-//     hand = hands[message.author.username]
-//   }
-//   hand.push(new_card);
-
-//   fs.writeFile("./hands.json",JSON.stringify(hands,null,4),err =>{
-//     if (err) throw err;
-//     message.channel.send("written");
-//   });
