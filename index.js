@@ -1,67 +1,163 @@
-const Discord = require('discord.js');
-const {prefix,token,suits,values} = require('./config.json');
+const Discord = require("discord.js");
+const { prefix, token, suits, values } = require("./config.json");
 bot = new Discord.Client();
-const fs = require('fs');
+const fs = require("fs");
+const { type } = require("os");
 
-
+//
+//bot commands start
+//
 bot.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-for (const file of commandFiles){
-  const command = require(`./commands/${file}`);
+const shuffle_command = {
+  name: "shuffle",
+  description: "shuffles the deck a bit.",
+  execute(message, args) {
+    shuffle(fate_deck);
+    message.channel.send("Fate deck shuffled.");
+  },
+};
+bot.commands.set(shuffle_command.name, shuffle_command);
 
-  bot.commands.set(command.name,command);
+const flip_command = {
+  name: "flip",
+  description: "flips x numbers of cards",
+  execute(message, args) {
+    num = args[0];
+    sorted = args[1];
+    if (!num > 0) {
+      num = 1;
+    }
+    flipped_cards = flip(fate_deck, num, sorted);
+    faces = [];
+    flipped_cards.forEach((card) => {
+      faces.push(`${card.value} of ${card.suit}`);
+    });
+    message.channel.send("Cards flipped: " + faces.join(","));
+  },
+};
+bot.commands.set(flip_command.name, flip_command);
+
+//
+//bot commands end
+//
+
+//function for shuffling decks
+function shuffle(deck) {
+  for (var i = 0; i < 1000; i++) {
+    var randomLocation = Math.floor(Math.random() * deck.cards.length);
+    var temp = deck.cards[0];
+    deck.cards[0] = deck.cards[randomLocation];
+    deck.cards[randomLocation] = temp;
+  }
 }
 
+//function for flipping cards
+function flip(deck, numflips, sorted) {
+  var flippedCards = [];
+  for (var i = 0; i < numflips; i++) {
+    if (deck.cards.length <= 0) {
+      deck.cards = deck.discard;
+      shuffle(deck);
+    }
+    var pulledCard = deck.cards.shift();
+    flippedCards.unshift(pulledCard);
+  }
+  if (sorted == "unsorted") {
+  } else {
+    flippedCards.sort((a, b) => {
+      return a.value - b.value;
+    });
+  }
+  deck.discard = deck.discard.concat(flippedCards);
+  return flippedCards;
+}
 
-function initializeDeck(){
-  var deck = new Array();
-  for(var i = 0; i< suits.length; i++){
-    for(var j = 0; j < values.length; j++){
-      var card = {value: values[j], suit: suits[i]};
-      deck.push(card);
+//function for creating fate or twist deck
+function createDeck(suits, values, center, descendant) {
+  var deck = {};
+  deck.cards = new Array();
+  deck.discard = new Array();
+  deck.hand = new Array();
+  if (arguments.length == 4) {
+    //create defining cards
+    definining_values = [1, 5, 9, 13];
+    ascendant_values = [4, 8, 12];
+    center_values = [3, 7, 11];
+    descendant_values = [2, 6, 10];
+
+    function add_twist_set(values, suit) {
+      suit = findSuit(suit);
+      values.forEach((value) => {
+        var card = { value: value, suit: suit };
+        deck.cards.push(card);
+      });
+    }
+
+    add_twist_set(definining_values, suits);
+    add_twist_set(ascendant_values, values);
+    add_twist_set(center_values, center);
+    add_twist_set(descendant_values, descendant);
+  } else {
+    for (var i = 0; i < suits.length; i++) {
+      for (var j = 0; j < values.length; j++) {
+        var card = { value: values[j], suit: suits[i] };
+        deck.cards.push(card);
+      }
     }
   }
-  // console.log(deck.length);
+
   return deck;
 }
 
-bot.once('ready',()=>{
-  deck = initializeDeck();
-  discard = new Array();
-  // console.log(deck);
+function findSuit(string) {
+  char = string.charAt(0).toLowerCase();
+  suit = "";
+  switch (char) {
+    case "m":
+      suit = "masks";
+      break;
+    case "r":
+      suit = "rams";
+      break;
+    case "c":
+      suit = "crows";
+      break;
+    case "t":
+      suit = "tomes";
+      break;
+    default:
+      suit = "unknown";
+      break;
+  }
+  return suit;
+}
+
+bot.once("ready", () => {
+  fate_deck = createDeck(suits, values);
+  console.log(fate_deck);
   console.log("bot ready!");
 });
 
-
-
-
-bot.on('message',message =>{
-  if(!message.content.startsWith(prefix) || message.author.bot) return;
+bot.on("message", (message) => {
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).split(" ");
   const commandName = args.shift().toLowerCase();
-  console.log(commandName);  
-  
+  console.log(commandName);
+
   //if command name doesn't exist exit
   if (!bot.commands.has(commandName)) return;
-  
+
   const command = bot.commands.get(commandName);
 
   try {
     command.execute(message, args);
   } catch (error) {
     console.error(error);
-    message.reply('I had trouble following that. Please check your message or let the bot dude know.');
+    message.reply(
+      "I had trouble following that. Please check your message or let the bot dude know."
+    );
   }
-
 });
-
-
-
-
-
-
-
-
 
 bot.login(token);
