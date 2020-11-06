@@ -3,7 +3,7 @@ const { prefix, token, suits, values } = require("./config.json");
 bot = new Discord.Client();
 const fs = require("fs");
 const { type } = require("os");
-
+bot.twist_decks = require("./TwistDecks.json");
 //
 //bot commands start
 //
@@ -37,6 +37,26 @@ const flip_command = {
   },
 };
 bot.commands.set(flip_command.name, flip_command);
+
+const create_twist_command = {
+  name: "create",
+  description: "shuffles the deck a bit.",
+  execute(message, args) {
+    message.channel.send("creating...");
+    bot.twist_decks[message.author.username] = {
+      message: message.content
+    }
+    fs.writeFile("./TwistDecks.json", JSON.stringify(bot.twist_decks, null, 4), err => {
+      if (err) throw err;
+      message.channel.send("created.");
+    });
+
+  },
+};
+bot.commands.set(create_twist_command.name, create_twist_command);
+
+
+
 
 //
 //bot commands end
@@ -135,7 +155,7 @@ function findSuit(string) {
 
 bot.once("ready", () => {
   fate_deck = createDeck(suits, values);
-  console.log(fate_deck);
+  // console.log(fate_deck);
   console.log("bot ready!");
 });
 
