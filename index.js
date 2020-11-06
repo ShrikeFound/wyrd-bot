@@ -42,20 +42,49 @@ const create_twist_command = {
   name: "create",
   description: "shuffles the deck a bit.",
   execute(message, args) {
-    message.channel.send("creating...");
-    bot.twist_decks[message.author.username] = {
-      message: message.content
+    // message.channel.send("creating...");
+    if (args.length <= 3) {
+      message.channel.send("please enter 4 suits (you entered '"+args+" ')")
+      return
+    }
+
+    deck = createDeck(args[0], args[1], args[2], args[3]);
+    bot.twist_decks[message.author.id] = {
+      deck: deck.cards,
+      hand: deck.hand,
+      discard: deck.discard
     }
     fs.writeFile("./TwistDecks.json", JSON.stringify(bot.twist_decks, null, 4), err => {
       if (err) throw err;
-      message.channel.send("created.");
+      message.channel.send("created. use !show to view your deck.");
     });
 
   },
 };
 bot.commands.set(create_twist_command.name, create_twist_command);
 
+const show_twist_command = {
+  name: "show",
+  description: "shows the deck",
+  execute(message, args) {
+    
+    deck = bot.twist_decks[message.author.id].deck;
+    message.channel.send(deck);
 
+  },
+};
+bot.commands.set(show_twist_command.name, show_twist_command);
+
+const cheat_twist_command = {
+  name: "cheat",
+  description: "shows the deck",
+  execute(message, args) {
+    
+    message.channel.send("this will cheat the card you choose..eventually");
+
+  },
+};
+bot.commands.set(cheat_twist_command.name, cheat_twist_command);
 
 
 //
