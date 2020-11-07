@@ -2,19 +2,27 @@
     "232633917876862987": {
         "deck": [
             {
-                "value": 1,
-                "suit": "rams"
-            },
-            {
-                "value": 5,
-                "suit": "rams"
-            },
-            {
-                "value": 9,
-                "suit": "rams"
+                "value": 2,
+                "suit": "tomes"
             },
             {
                 "value": 13,
+                "suit": "masks"
+            },
+            {
+                "value": 7,
+                "suit": "rams"
+            },
+            {
+                "value": 1,
+                "suit": "masks"
+            },
+            {
+                "value": 6,
+                "suit": "tomes"
+            },
+            {
+                "value": 3,
                 "suit": "rams"
             },
             {
@@ -26,32 +34,24 @@
                 "suit": "crows"
             },
             {
-                "value": 12,
-                "suit": "crows"
-            },
-            {
-                "value": 3,
-                "suit": "masks"
-            },
-            {
-                "value": 7,
-                "suit": "masks"
-            },
-            {
                 "value": 11,
-                "suit": "masks"
-            },
-            {
-                "value": 2,
-                "suit": "tomes"
-            },
-            {
-                "value": 6,
-                "suit": "tomes"
+                "suit": "rams"
             },
             {
                 "value": 10,
                 "suit": "tomes"
+            },
+            {
+                "value": 5,
+                "suit": "masks"
+            },
+            {
+                "value": 9,
+                "suit": "masks"
+            },
+            {
+                "value": 12,
+                "suit": "crows"
             }
         ],
         "hand": [],

@@ -44,21 +44,27 @@ const create_twist_command = {
   execute(message, args) {
     // message.channel.send("creating...");
     if (args.length <= 3) {
-      message.channel.send("please enter 4 suits (you entered '"+args+" ')")
-      return
+      message.channel.send(
+        "please enter 4 suits (you entered '" + args + " ')"
+      );
+      return;
     }
 
     deck = createDeck(args[0], args[1], args[2], args[3]);
+    shuffle(deck);
     bot.twist_decks[message.author.id] = {
       deck: deck.cards,
       hand: deck.hand,
-      discard: deck.discard
-    }
-    fs.writeFile("./TwistDecks.json", JSON.stringify(bot.twist_decks, null, 4), err => {
-      if (err) throw err;
-      message.channel.send("created. use !show to view your deck.");
-    });
-
+      discard: deck.discard,
+    };
+    fs.writeFile(
+      "./TwistDecks.json",
+      JSON.stringify(bot.twist_decks, null, 4),
+      (err) => {
+        if (err) throw err;
+        message.channel.send("created. use !show to view your deck.");
+      }
+    );
   },
 };
 bot.commands.set(create_twist_command.name, create_twist_command);
@@ -67,10 +73,10 @@ const show_twist_command = {
   name: "show",
   description: "shows the deck",
   execute(message, args) {
-    
-    deck = bot.twist_decks[message.author.id].deck;
-    message.channel.send(deck);
-
+    deck = bot.twist_decks[message.author.id].deck.map(
+      (card) => card.value + " of " + card.suit
+    );
+    message.author.send(deck);
   },
 };
 bot.commands.set(show_twist_command.name, show_twist_command);
@@ -79,13 +85,33 @@ const cheat_twist_command = {
   name: "cheat",
   description: "shows the deck",
   execute(message, args) {
-    
-    message.channel.send("this will cheat the card you choose..eventually");
+    cheated_value = args[0];
+    twist_deck = bot.twist_decks[message.author.id].deck;
+    results = drawCard(twist_deck, cheated_value);
+    if (results == false) {
+      message.channel.send("couldn't find that card");
+      return;
+    }
+    let cheated_card = results.cheated_card[0],
+      remaining_deck = results.remaining_deck;
 
+    bot.twist_decks[message.author.id].deck = remaining_deck;
+    discard = bot.twist_decks[message.author.id].discard;
+    fs.writeFile(
+      "./TwistDecks.json",
+      JSON.stringify(bot.twist_decks, null, 4),
+      (err) => {
+        if (err) throw err;
+        message.channel.send("created. use !show to view your deck.");
+      }
+    );
+
+    message.channel.send(
+      "cheating with a " + cheated_card.value + " of " + cheated_card.suit
+    );
   },
 };
 bot.commands.set(cheat_twist_command.name, cheat_twist_command);
-
 
 //
 //bot commands end
@@ -180,6 +206,18 @@ function findSuit(string) {
       break;
   }
   return suit;
+}
+
+function drawCard(deck, value) {
+  cheated_card = deck.filter((card) => card.value == value);
+  remaining_deck = deck.filter((card) => card.value != value);
+  if (cheated_card.length <= 0) {
+    return false;
+  }
+  return {
+    cheated_card,
+    remaining_deck,
+  };
 }
 
 bot.once("ready", () => {
