@@ -1,12 +1,44 @@
 {
     "232633917876862987": {
-        "deck": [
+        "cards": [
             {
-                "value": 2,
+                "value": 3,
+                "suit": "rams"
+            },
+            {
+                "value": 8,
+                "suit": "crows"
+            },
+            {
+                "value": 12,
+                "suit": "crows"
+            },
+            {
+                "value": 9,
                 "suit": "tomes"
             },
             {
+                "value": 4,
+                "suit": "crows"
+            },
+            {
                 "value": 13,
+                "suit": "tomes"
+            },
+            {
+                "value": 5,
+                "suit": "tomes"
+            },
+            {
+                "value": 2,
+                "suit": "masks"
+            },
+            {
+                "value": 11,
+                "suit": "rams"
+            },
+            {
+                "value": 6,
                 "suit": "masks"
             },
             {
@@ -15,43 +47,11 @@
             },
             {
                 "value": 1,
-                "suit": "masks"
-            },
-            {
-                "value": 6,
                 "suit": "tomes"
-            },
-            {
-                "value": 3,
-                "suit": "rams"
-            },
-            {
-                "value": 4,
-                "suit": "crows"
-            },
-            {
-                "value": 8,
-                "suit": "crows"
-            },
-            {
-                "value": 11,
-                "suit": "rams"
             },
             {
                 "value": 10,
-                "suit": "tomes"
-            },
-            {
-                "value": 5,
                 "suit": "masks"
-            },
-            {
-                "value": 9,
-                "suit": "masks"
-            },
-            {
-                "value": 12,
-                "suit": "crows"
             }
         ],
         "hand": [],

@@ -53,7 +53,7 @@ const create_twist_command = {
     deck = createDeck(args[0], args[1], args[2], args[3]);
     shuffle(deck);
     bot.twist_decks[message.author.id] = {
-      deck: deck.cards,
+      cards: deck.cards,
       hand: deck.hand,
       discard: deck.discard,
     };
@@ -73,10 +73,10 @@ const show_twist_command = {
   name: "show",
   description: "shows the deck",
   execute(message, args) {
-    deck = bot.twist_decks[message.author.id].deck.map(
+    hand = bot.twist_decks[message.author.id].hand.map(
       (card) => card.value + " of " + card.suit
     );
-    message.author.send(deck);
+    message.channel.send("Your hand: " + hand);
   },
 };
 bot.commands.set(show_twist_command.name, show_twist_command);
@@ -86,8 +86,8 @@ const cheat_twist_command = {
   description: "shows the deck",
   execute(message, args) {
     cheated_value = args[0];
-    twist_deck = bot.twist_decks[message.author.id].deck;
-    results = drawCard(twist_deck, cheated_value);
+    twist_deck = bot.twist_decks[message.author.id].cards;
+    results = cheatCard(twist_deck, cheated_value);
     if (results == false) {
       message.channel.send("couldn't find that card");
       return;
@@ -95,7 +95,7 @@ const cheat_twist_command = {
     let cheated_card = results.cheated_card[0],
       remaining_deck = results.remaining_deck;
 
-    bot.twist_decks[message.author.id].deck = remaining_deck;
+    bot.twist_decks[message.author.id].cards = remaining_deck;
     discard = bot.twist_decks[message.author.id].discard;
     fs.writeFile(
       "./TwistDecks.json",
@@ -112,6 +112,16 @@ const cheat_twist_command = {
   },
 };
 bot.commands.set(cheat_twist_command.name, cheat_twist_command);
+
+const draw_twist_command = {
+  name: "draw",
+  description: "shows the deck",
+  execute(message, args) {
+    deck = bot.twist_decks[message.author.id];
+    message.channel.send("this is the draw command: " + deck);
+  },
+};
+bot.commands.set(draw_twist_command.name, draw_twist_command);
 
 //
 //bot commands end
@@ -145,6 +155,26 @@ function flip(deck, numflips, sorted) {
     });
   }
   deck.discard = deck.discard.concat(flippedCards);
+  return flippedCards;
+}
+
+//function for flipping cards
+function draw(deck, numflips) {
+  var drawnCards = [];
+  for (var i = 0; i < numflips; i++) {
+    if (deck.deck.length <= 0) {
+      deck.deck = deck.discard;
+      shuffle(deck);
+    }
+    var drawnCard = deck.cards.shift();
+    drawnCards.unshift(drawnCard);
+  }
+
+  drawnCards.sort((a, b) => {
+    return a.value - b.value;
+  });
+
+  deck.discard = deck.discard.concat(drawnCards);
   return flippedCards;
 }
 
@@ -208,7 +238,7 @@ function findSuit(string) {
   return suit;
 }
 
-function drawCard(deck, value) {
+function cheatCard(deck, value) {
   cheated_card = deck.filter((card) => card.value == value);
   remaining_deck = deck.filter((card) => card.value != value);
   if (cheated_card.length <= 0) {
