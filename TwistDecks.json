@@ -2,12 +2,44 @@
     "232633917876862987": {
         "cards": [
             {
+                "value": 13,
+                "suit": "tomes"
+            },
+            {
+                "value": 1,
+                "suit": "tomes"
+            },
+            {
+                "value": 11,
+                "suit": "rams"
+            },
+            {
+                "value": 2,
+                "suit": "masks"
+            },
+            {
+                "value": 7,
+                "suit": "rams"
+            },
+            {
                 "value": 3,
                 "suit": "rams"
             },
             {
+                "value": 5,
+                "suit": "tomes"
+            },
+            {
+                "value": 10,
+                "suit": "masks"
+            },
+            {
                 "value": 8,
                 "suit": "crows"
+            },
+            {
+                "value": 6,
+                "suit": "masks"
             },
             {
                 "value": 12,
@@ -16,45 +48,14 @@
             {
                 "value": 9,
                 "suit": "tomes"
-            },
-            {
-                "value": 4,
-                "suit": "crows"
-            },
-            {
-                "value": 13,
-                "suit": "tomes"
-            },
-            {
-                "value": 5,
-                "suit": "tomes"
-            },
-            {
-                "value": 2,
-                "suit": "masks"
-            },
-            {
-                "value": 11,
-                "suit": "rams"
-            },
-            {
-                "value": 6,
-                "suit": "masks"
-            },
-            {
-                "value": 7,
-                "suit": "rams"
-            },
-            {
-                "value": 1,
-                "suit": "tomes"
-            },
-            {
-                "value": 10,
-                "suit": "masks"
             }
         ],
         "hand": [],
-        "discard": []
+        "discard": [
+            {
+                "value": 4,
+                "suit": "crows"
+            }
+        ]
     }
 }

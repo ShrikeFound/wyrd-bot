@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const { prefix, token, suits, values } = require("./config.json");
+const {test,cheatCard,draw,shuffle,flip} = require("./twist_functions.js");
 bot = new Discord.Client();
 const fs = require("fs");
 const { type } = require("os");
@@ -94,9 +95,9 @@ const cheat_twist_command = {
     }
     let cheated_card = results.cheated_card[0],
       remaining_deck = results.remaining_deck;
-
     bot.twist_decks[message.author.id].cards = remaining_deck;
     discard = bot.twist_decks[message.author.id].discard;
+    discard.push(cheated_card)
     fs.writeFile(
       "./TwistDecks.json",
       JSON.stringify(bot.twist_decks, null, 4),
@@ -127,58 +128,6 @@ bot.commands.set(draw_twist_command.name, draw_twist_command);
 //bot commands end
 //
 
-//function for shuffling decks
-function shuffle(deck) {
-  for (var i = 0; i < 1000; i++) {
-    var randomLocation = Math.floor(Math.random() * deck.cards.length);
-    var temp = deck.cards[0];
-    deck.cards[0] = deck.cards[randomLocation];
-    deck.cards[randomLocation] = temp;
-  }
-}
-
-//function for flipping cards
-function flip(deck, numflips, sorted) {
-  var flippedCards = [];
-  for (var i = 0; i < numflips; i++) {
-    if (deck.cards.length <= 0) {
-      deck.cards = deck.discard;
-      shuffle(deck);
-    }
-    var pulledCard = deck.cards.shift();
-    flippedCards.unshift(pulledCard);
-  }
-  if (sorted == "unsorted") {
-  } else {
-    flippedCards.sort((a, b) => {
-      return a.value - b.value;
-    });
-  }
-  deck.discard = deck.discard.concat(flippedCards);
-  return flippedCards;
-}
-
-//function for flipping cards
-function draw(deck, numflips) {
-  var drawnCards = [];
-  for (var i = 0; i < numflips; i++) {
-    if (deck.deck.length <= 0) {
-      deck.deck = deck.discard;
-      shuffle(deck);
-    }
-    var drawnCard = deck.cards.shift();
-    drawnCards.unshift(drawnCard);
-  }
-
-  drawnCards.sort((a, b) => {
-    return a.value - b.value;
-  });
-
-  deck.discard = deck.discard.concat(drawnCards);
-  return flippedCards;
-}
-
-//function for creating fate or twist deck
 function createDeck(suits, values, center, descendant) {
   var deck = {};
   deck.cards = new Array();
@@ -215,6 +164,8 @@ function createDeck(suits, values, center, descendant) {
   return deck;
 }
 
+
+
 function findSuit(string) {
   char = string.charAt(0).toLowerCase();
   suit = "";
@@ -236,19 +187,24 @@ function findSuit(string) {
       break;
   }
   return suit;
+  }
+
+function writeDeck(deck,author) {
+  
 }
 
-function cheatCard(deck, value) {
-  cheated_card = deck.filter((card) => card.value == value);
-  remaining_deck = deck.filter((card) => card.value != value);
-  if (cheated_card.length <= 0) {
-    return false;
-  }
-  return {
-    cheated_card,
-    remaining_deck,
-  };
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 bot.once("ready", () => {
   fate_deck = createDeck(suits, values);
@@ -276,5 +232,7 @@ bot.on("message", (message) => {
     );
   }
 });
+
+test();
 
 bot.login(token);
