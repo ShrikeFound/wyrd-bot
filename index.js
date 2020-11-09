@@ -42,12 +42,23 @@ const twist_show_command = {
     hand = deck.hand.map(
       (card) => card.value + " of " + card.suit
     );
-    message.channel.send("Your hand: "+hand);
+    message.channel.send(message.author.username+ "'s hand: "+hand);
   }
 }
 bot.commands.set(twist_show_command.name,twist_show_command)
 
 
+const twist_draw_command = {
+  name: "draw",
+  description: "draws cards from the player's twist deck",
+  execute(message, args) {
+    twist_deck = readDeck(message.author.id)
+    num = parseInt(args[0])
+    draw(twist_deck, num);
+    writeDeck(message.author.id, twist_deck.cards, twist_deck.hand, twist_deck.discard);
+  }
+}
+bot.commands.set(twist_draw_command.name, twist_draw_command);
 
 //bot commands end -----------------------------
 
@@ -168,6 +179,7 @@ function draw(deck, numflips) {
   var drawnCards = [];
   for (var i = 0; i < numflips; i++) {
     if (deck.cards.length <= 0) {
+      if (deck.discard.length <= 0) break;
       deck.cards = deck.discard;
       shuffle(deck);
     }
@@ -175,12 +187,17 @@ function draw(deck, numflips) {
     drawnCards.unshift(drawnCard);
   }
 
-  drawnCards.sort((a, b) => {
+
+
+  deck.hand = deck.hand.concat(drawnCards);
+
+  deck.hand.sort((a, b) => {
     return a.value - b.value;
   });
 
-  deck.hand = deck.discard.concat(drawnCards);
-  }
+
+
+}
 
 
 
