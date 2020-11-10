@@ -1,15 +1,48 @@
 const Discord = require("discord.js");
-const { prefix, token, suits, values } = require("./config.json");
+const { prefix, token, suits, values, fatemaster_id } = require("./config.json");
 bot = new Discord.Client();
 const fs = require("fs");
 const { type } = require("os");
 bot.decks = require("./decks.json");
 
 
-
 //bot commands start -----------------------------
 
 bot.commands = new Discord.Collection();
+
+
+
+
+
+const fate_shuffle_command = {
+  name: "shuffle",
+  description: "shuffles the fate deck",
+  execute(message, args) {
+    if (isFM(message.author.id)){
+      fate_deck = readDeck(0);
+      shuffle(fate_deck);
+      writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
+    }
+  }
+}
+bot.commands.set(fate_shuffle_command.name, fate_shuffle_command);
+
+
+const fate_flip_command = {
+  name: "flip",
+  description: "flips a number of cards from the fate deck",
+  execute(message,args) {
+    num = args[0];
+    if (!num > 0) {
+      num = 1;
+    }
+    fate_deck = readDeck(0);
+    flip(fate_deck, num);
+    writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
+
+  }
+}
+bot.commands.set(fate_flip_command.name, fate_flip_command);
 
 
 
@@ -35,14 +68,26 @@ bot.commands.set(twist_initialize_command.name, twist_initialize_command);
 
 
 const twist_show_command = {
-  name: "hand",
+  name: "show",
   description: "shows a player's twist hand",
   execute(message, args) {
+    // if (isFM(message.author.id)) return;
+ 
     deck = readDeck(message.author.id)
     hand = deck.hand.map(
       (card) => card.value + " of " + card.suit
     );
-    message.channel.send(message.author.username+ "'s hand: "+hand);
+    discard = deck.discard.map(
+      (card) => card.value + " of " + card.suit
+    );
+    if (args[0] == "hand") {
+      message.channel.send(message.author.username+ "'s hand: "+hand);      
+    } else if (args[0] == "discard") {
+      message.channel.send(message.author.username+ "'s discard pile: "+discard);      
+    } else {
+      message.channel.send(message.author.username+ "'s hand: "+hand +"\n"+message.author.username+"'s discard pile: "+discard);      
+    }
+
   }
 }
 bot.commands.set(twist_show_command.name,twist_show_command)
@@ -52,6 +97,7 @@ const twist_draw_command = {
   name: "draw",
   description: "draws cards from the player's twist deck",
   execute(message, args) {
+    // if (isFM(message.author.id)) return;
     twist_deck = readDeck(message.author.id)
     num = parseInt(args[0])
     draw(twist_deck, num);
@@ -59,6 +105,28 @@ const twist_draw_command = {
   }
 }
 bot.commands.set(twist_draw_command.name, twist_draw_command);
+
+const twist_cheat_command = {
+  name: "cheat",
+  description: "cheats a card; moves it from the player's hand to the discard pile.",
+  execute(message, args) {
+
+    //card values are ints so we need to parse the argument as an int
+    var value = parseInt(args[0]);
+    var twist_deck = readDeck(message.author.id);
+    cheatedCard = cheat(twist_deck, value);
+    if (cheatedCard === undefined) {
+      message.channel.send(" couldn't find that card.");
+      return;
+    };
+    message.channel.send("cheated with: "+cheatedCard.value+" of "+cheatedCard.suit);
+    writeDeck(message.author.id,twist_deck.cards,twist_deck.hand,twist_deck.discard)
+  }
+}
+bot.commands.set(twist_cheat_command.name,twist_cheat_command)
+
+
+
 
 //bot commands end -----------------------------
 
@@ -187,43 +255,48 @@ function draw(deck, numflips) {
     drawnCards.unshift(drawnCard);
   }
 
-
-
   deck.hand = deck.hand.concat(drawnCards);
 
   deck.hand.sort((a, b) => {
     return a.value - b.value;
   });
 
+}
 
+function cheat(deck, cheatedValue) {
+  var cheatedCard = deck.hand.find(card => {
+    return card.value === cheatedValue;
+  });
+  deck.hand = deck.hand.filter(card => {
+    return card.value !== cheatedValue;
+  })
+  deck.discard = deck.discard.concat(cheatedCard);
 
+  return cheatedCard;
 }
 
 
 
-
-
-function flip(deck, numflips, sorted) {
-  var flippedCards = [];
+function flip(deck, numflips) {
+  flippedCards = []
   for (var i = 0; i < numflips; i++) {
     if (deck.cards.length <= 0) {
+      if (deck.discard.length <= 0) break;
       deck.cards = deck.discard;
       shuffle(deck);
     }
     var pulledCard = deck.cards.shift();
     flippedCards.unshift(pulledCard);
   }
-  if (sorted == "unsorted") {
-  } else {
-    flippedCards.sort((a, b) => {
-      return a.value - b.value;
-    });
-  }
   deck.discard = deck.discard.concat(flippedCards);
   return flippedCards;
 }
 
 
+
+function isFM(id) {
+  return fatemaster_id === id
+}
 
 
 
