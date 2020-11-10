@@ -11,9 +11,6 @@ bot.decks = require("./decks.json");
 bot.commands = new Discord.Collection();
 
 
-
-
-
 const fate_shuffle_command = {
   name: "shuffle",
   description: "shuffles the fate deck",
@@ -37,9 +34,14 @@ const fate_flip_command = {
       num = 1;
     }
     fate_deck = readDeck(0);
-    flip(fate_deck, num);
-    writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
 
+
+     flippedCards = flip(fate_deck, num).map(
+      (card) => card.value + " of " + card.suit
+    );
+
+    writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
+    message.channel.send("cards flipped: " + flippedCards);
   }
 }
 bot.commands.set(fate_flip_command.name, fate_flip_command);
@@ -84,6 +86,13 @@ const twist_show_command = {
       message.channel.send(message.author.username+ "'s hand: "+hand);      
     } else if (args[0] == "discard") {
       message.channel.send(message.author.username+ "'s discard pile: "+discard);      
+    } else if (args[0] == "me") {
+      if (args[1] == "the") {
+        if (args[2] == "money") {
+          message.react("💸").then(message.react("💰")).then(message.react("💵")) 
+                  
+       } 
+      }
     } else {
       message.channel.send(message.author.username+ "'s hand: "+hand +"\n"+message.author.username+"'s discard pile: "+discard);      
     }
@@ -106,6 +115,24 @@ const twist_draw_command = {
 }
 bot.commands.set(twist_draw_command.name, twist_draw_command);
 
+const twist_discard_command = {
+  name: "discard",
+  description: "discards a card from the player's twist deck.",
+  execute(message, args) {
+    var value = parseInt(args[0]);
+    var twist_deck = readDeck(message.author.id);
+    cheatedCard = cheat(twist_deck, value);
+    if (cheatedCard === undefined) {
+      message.channel.send("You don't have that card.");
+      return;
+    };
+    message.channel.send("discarded: "+cheatedCard.value+" of "+cheatedCard.suit);
+    writeDeck(message.author.id,twist_deck.cards,twist_deck.hand,twist_deck.discard)
+  }
+}
+bot.commands.set(twist_discard_command.name,twist_discard_command)
+
+
 const twist_cheat_command = {
   name: "cheat",
   description: "cheats a card; moves it from the player's hand to the discard pile.",
@@ -116,7 +143,7 @@ const twist_cheat_command = {
     var twist_deck = readDeck(message.author.id);
     cheatedCard = cheat(twist_deck, value);
     if (cheatedCard === undefined) {
-      message.channel.send(" couldn't find that card.");
+      message.channel.send("You don't have that card.");
       return;
     };
     message.channel.send("cheated with: "+cheatedCard.value+" of "+cheatedCard.suit);
@@ -267,6 +294,9 @@ function cheat(deck, cheatedValue) {
   var cheatedCard = deck.hand.find(card => {
     return card.value === cheatedValue;
   });
+  if (!cheatedCard) {
+    return cheatedCard
+  }
   deck.hand = deck.hand.filter(card => {
     return card.value !== cheatedValue;
   })
