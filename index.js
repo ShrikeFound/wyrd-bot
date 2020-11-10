@@ -83,9 +83,9 @@ const twist_show_command = {
       (card) => card.value + " of " + card.suit
     );
     if (args[0] == "hand") {
-      message.channel.send(message.author.username+ "'s hand: "+hand);      
+      message.author.send(message.author.username+ "'s hand: "+hand);      
     } else if (args[0] == "discard") {
-      message.channel.send(message.author.username+ "'s discard pile: "+discard);      
+      message.author.send(message.author.username+ "'s discard pile: "+discard);      
     } else if (args[0] == "me") {
       if (args[1] == "the") {
         if (args[2] == "money") {
@@ -94,7 +94,7 @@ const twist_show_command = {
        } 
       }
     } else {
-      message.channel.send(message.author.username+ "'s hand: "+hand +"\n"+message.author.username+"'s discard pile: "+discard);      
+      message.author.send(message.author.username+ "'s hand: "+hand +"\n"+message.author.username+"'s discard pile: "+discard);      
     }
 
   }
@@ -123,10 +123,10 @@ const twist_discard_command = {
     var twist_deck = readDeck(message.author.id);
     cheatedCard = cheat(twist_deck, value);
     if (cheatedCard === undefined) {
-      message.channel.send("You don't have that card.");
+      // message.channel.send("You don't have that card.");
       return;
     };
-    message.channel.send("discarded: "+cheatedCard.value+" of "+cheatedCard.suit);
+    message.channel.send(author.username+" discarded: "+cheatedCard.value+" of "+cheatedCard.suit);
     writeDeck(message.author.id,twist_deck.cards,twist_deck.hand,twist_deck.discard)
   }
 }
@@ -143,10 +143,10 @@ const twist_cheat_command = {
     var twist_deck = readDeck(message.author.id);
     cheatedCard = cheat(twist_deck, value);
     if (cheatedCard === undefined) {
-      message.channel.send("You don't have that card.");
+      // message.channel.send("You don't have that card.");
       return;
     };
-    message.channel.send("cheated with: "+cheatedCard.value+" of "+cheatedCard.suit);
+    message.channel.send(author.username+" cheated with: "+cheatedCard.value+" of "+cheatedCard.suit);
     writeDeck(message.author.id,twist_deck.cards,twist_deck.hand,twist_deck.discard)
   }
 }
