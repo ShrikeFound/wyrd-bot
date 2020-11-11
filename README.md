@@ -7,7 +7,8 @@ a Discord bot used to simulate a fate deck and player twist decks for the Throug
 
 #Configuration
 1. Create a `config.json` file and fill out the values (you can copy and paste the below as a template):
-        {
+      ```JSON
+      {
         "prefix"          :"!",
         "token"           :"NzQ2NDcyMDA0NjcyMTU5ODM4.X0A0Og.pj-oe5DAqHR1Ufw9xEC8iLOJbsY",
         "suits"           : ["masks","rams","crows","tomes"],
@@ -18,7 +19,7 @@ a Discord bot used to simulate a fate deck and player twist decks for the Throug
         "descendantValues": [2,6,10],
         "fatemaster_id"   : "232633917876862987"
         }
-    
+    ```
 
 
 2. Run the bot using `Node .`
