@@ -1,11 +1,11 @@
 # wyrd-bot
 a Discord bot used to simulate a fate deck and player twist decks for the Through the Breach RPG
 
-#Getting Started
+# Getting Started
 1. Install Node.js v12.3.0 or newer
 2. Clone the repo
 
-#Configuration
+#C onfiguration
 1. Create a `config.json` file and fill out the values (you can copy and paste the below as a template). The "fatemaster_id" is used to grant shuffle permission for the fate deck.
       ```JSON
       {
@@ -24,7 +24,7 @@ a Discord bot used to simulate a fate deck and player twist decks for the Throug
 
 2. Run the bot using `Node .`
 
-#Features & Commands
+# Features & Commands
 `!flip` flips a card from the fate deck. You can add a number after the flip for multiple. `!flip 2` will flip over 2 cards, for example. Wyrd Bot reshuffles the discard pile back into the deck when there are no more cards.
 
 `!shuffle` shuffles the fate deck. This is limited to fatemasters.
