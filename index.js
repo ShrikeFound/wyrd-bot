@@ -15,6 +15,7 @@ const fate_shuffle_command = {
   name: "shuffle",
   description: "shuffles the fate deck",
   execute(message, args) {
+    console.log(isFM(message.author.id));
     if (isFM(message.author.id)){
       fate_deck = readDeck(0);
       shuffle(fate_deck);
@@ -341,7 +342,7 @@ bot.on("message", (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).split(" ");
   const commandName = args.shift().toLowerCase();
-  console.log(commandName);
+  console.log(message.author.id+": "+commandName);
 
   //if command name doesn't exist exit
   if (!bot.commands.has(commandName)) return;
