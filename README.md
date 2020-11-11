@@ -5,7 +5,7 @@ a Discord bot used to simulate a fate deck and player twist decks for the Throug
 1. Install Node.js v12.3.0 or newer
 2. Clone the repo
 
-#C onfiguration
+# Configuration
 1. Create a `config.json` file and fill out the values (you can copy and paste the below as a template). The "fatemaster_id" is used to grant shuffle permission for the fate deck.
       ```JSON
       {
