@@ -210,8 +210,14 @@ bot.commands.set(character_reset.name, character_reset);
 // bot.commands.set(character_read.name,character_read)
 
 
-
-
+const help_command = {
+  name: "help",
+  description: "lists commands and other stuff",
+  execute(message, args) {
+    message.author.send("this will be the help stuff.");
+  }
+}
+bot.commands.set(help_command.name,help_command)
 
 
 
@@ -501,6 +507,7 @@ function setAttribute(userID,attribute,value){
 bot.once("ready", () => {
   fate_deck = createDeck(suits, values);
   writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
+  bot.user.setActivity('type "!help" for a list of commands');
   console.log("bot ready!");
 });
 
