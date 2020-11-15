@@ -214,7 +214,11 @@ const help_command = {
   name: "help",
   description: "lists commands and other stuff",
   execute(message, args) {
-    message.author.send("this will be the help stuff.");
+    let help_message = "commands:\n"
+    bot.commands.forEach((values,key)=>{
+      help_message += ("**!" + key + ":** " + values["description"]+"\n");
+    })
+    message.author.send(help_message);
   }
 }
 bot.commands.set(help_command.name,help_command)
@@ -509,6 +513,7 @@ bot.once("ready", () => {
   writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
   bot.user.setActivity('type "!help" for a list of commands');
   console.log("bot ready!");
+  // console.log(bot.commands);
 });
 
 bot.on("message", (message) => {
