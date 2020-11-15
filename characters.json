@@ -1,0 +1,236 @@
+{
+    "232633917876862987": {
+        "might": 0,
+        "grace": 0,
+        "resilience": 0,
+        "speed": 0,
+        "charm": 0,
+        "cunning": 0,
+        "tenacity": 0,
+        "intellect": 0,
+        "bureaucracy": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "engineering": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "history": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "literacy": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "mathematics": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "music": {
+            "aspect": "charm",
+            "value": 0
+        },
+        "flexible": {
+            "aspect": "grace",
+            "value": 0
+        },
+        "grappling": {
+            "aspect": "speed",
+            "value": 0
+        },
+        "heavy melee": {
+            "aspect": "might",
+            "value": 0
+        },
+        "martial arts": {
+            "aspect": "speed",
+            "value": 0
+        },
+        "melee": {
+            "aspect": "might",
+            "value": 0
+        },
+        "pneumatic": {
+            "aspect": "might",
+            "value": 0
+        },
+        "pugilism": {
+            "aspect": "might",
+            "value": 0
+        },
+        "alchemistry": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "art": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "artefacting": {
+            "intelect": "cunning",
+            "value": 0
+        },
+        "blacksmithing": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "culinary": {
+            "aspect": "charm",
+            "value": 0
+        },
+        "explosives": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "homesteading": {
+            "aspect": "tenacity",
+            "value": 0
+        },
+        "printing": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "stitching": {
+            "aspect": "tenacity",
+            "value": 0
+        },
+        "doctor": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "forgery": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "gambling": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "husbandry": {
+            "aspect": "charm",
+            "value": 0
+        },
+        "lockpicking": {
+            "aspect": "grace",
+            "value": 0
+        },
+        "notice": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "track": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "wilderness": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "counterspelling": {
+            "aspect": "tenacity",
+            "value": 0
+        },
+        "enchanting": {
+            "aspect": "charm",
+            "value": 0
+        },
+        "necromancy": {
+            "aspect": "charm",
+            "value": 0
+        },
+        "sorcery": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "prestidigiation": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "archery": {
+            "aspect": "grace",
+            "value": 0
+        },
+        "heavy guns": {
+            "aspect": "might",
+            "value": 0
+        },
+        "long arms": {
+            "aspect": "intllect",
+            "value": 0
+        },
+        "pistol": {
+            "aspect": "grace",
+            "value": 0
+        },
+        "shotgun": {
+            "aspect": "grace",
+            "value": 0
+        },
+        "thrown weapons": {
+            "aspect": "grace",
+            "value": 0
+        },
+        "barter": {
+            "aspect": "tenacity",
+            "value": 0
+        },
+        "bewitch": {
+            "aspect": "charm",
+            "value": 0
+        },
+        "convince": {
+            "aspect": "intellect",
+            "value": 0
+        },
+        "deceive": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "intimidate": {
+            "aspect": "tenacity",
+            "value": 0
+        },
+        "leadership": {
+            "aspect": "charm",
+            "value": 0
+        },
+        "scrutiny": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "acrobatics": {
+            "aspect": "grace",
+            "value": 0
+        },
+        "athletics": {
+            "aspect": "might",
+            "value": 0
+        },
+        "carouse": {
+            "aspect": "resilience",
+            "value": 0
+        },
+        "centering": {
+            "aspect": "tenacity",
+            "value": 0
+        },
+        "evade": {
+            "aspect": "speed",
+            "value": 0
+        },
+        "pick picket": {
+            "aspect": "speed",
+            "value": 0
+        },
+        "stealth": {
+            "aspect": "cunning",
+            "value": 0
+        },
+        "toughness": {
+            "aspect": "resilience",
+            "value": 0
+        }
+    }
+}

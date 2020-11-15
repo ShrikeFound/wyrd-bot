@@ -4,6 +4,7 @@ bot = new Discord.Client();
 const fs = require("fs");
 const { type } = require("os");
 bot.decks = require("./decks.json");
+bot.characters = require("./characters.json");
 
 
 //bot commands start -----------------------------
@@ -30,7 +31,14 @@ const fate_flip_command = {
   name: "flip",
   description: "flips a number of cards from the fate deck",
   execute(message,args) {
-    num = args[0];
+    num = Number(args[0]);
+    if (isNaN(num)) {
+      skillname = args[0]
+      skill  = bot.characters[message.author.id][skillname]
+      aspect = bot.characters[message.author.id][skill["aspect"]]
+      num = Number(args[1]);      
+    }
+
     if (!num > 0) {
       num = 1;
     }
@@ -42,7 +50,7 @@ const fate_flip_command = {
     );
 
     writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
-    message.channel.send("cards flipped: " + flippedCards);
+    message.channel.send("cards flipped for "+skillname +" ("+(Number(skill["value"])+aspect)+"): " + flippedCards);
   }
 }
 bot.commands.set(fate_flip_command.name, fate_flip_command);
@@ -110,6 +118,9 @@ const twist_draw_command = {
     // if (isFM(message.author.id)) return;
     twist_deck = readDeck(message.author.id)
     num = parseInt(args[0])
+    if (num === 0) {
+      num = 1;
+    }
     draw(twist_deck, num);
     writeDeck(message.author.id, twist_deck.cards, twist_deck.hand, twist_deck.discard);
   }
@@ -147,19 +158,66 @@ const twist_cheat_command = {
       // message.channel.send("You don't have that card.");
       return;
     };
-    message.channel.send(author.username+" cheated with: "+cheatedCard.value+" of "+cheatedCard.suit);
+    message.channel.send(message.author.username +" cheated with: "+cheatedCard.value+" of "+cheatedCard.suit);
     writeDeck(message.author.id,twist_deck.cards,twist_deck.hand,twist_deck.discard)
   }
 }
 bot.commands.set(twist_cheat_command.name,twist_cheat_command)
 
 
+const character_set_attribute = {
+  name: "set",
+  description: "sets attribute of character sheet to chosen value",
+  execute(message, args) {
+    let attribute = args[0] || "blank";
+    attribute = attribute.toLowerCase();
+
+    let value = args[1] || 0;
+    value = parseInt(value);
+    
+
+    if (bot.characters[message.author.id] === undefined) {
+      createUser(message.author.id)
+    } else {
+    }
+
+    setAttribute(message.author.id,attribute,value)
+
+  }
+}
+bot.commands.set(character_set_attribute.name,character_set_attribute)
+
+const character_reset = {
+  name: "reset",
+  description: "resets character sheet",
+  execute(message, args) {
+    createUser(message.author.id);
+  }
+}
+bot.commands.set(character_reset.name, character_reset);
+
+
+// const character_read = {
+//   name: "read",
+//   description: "reads character sheet",
+//   execute(message, args) {
+//     console.log(bot.characters[message.author.id]["flexible"])
+//     let asp = bot.characters[message.author.id]["flexible"]["aspect"]
+//     console.log(asp);
+//     console.log(bot.characters[message.author.id][asp])
+//   }
+// }
+// bot.commands.set(character_read.name,character_read)
+
+
+
+
+
+
+
 
 
 //bot commands end -----------------------------
-
-
-
 
 
 
@@ -329,6 +387,114 @@ function isFM(id) {
   return fatemaster_id === id
 }
 
+
+//User Functions
+
+
+function createUser(userID) {
+  bot.characters[userID] = {
+    "might": 0,
+    "grace": 0,
+    "resilience": 0,
+    "speed": 0,
+    "charm": 0,
+    "cunning": 0,
+    "tenacity": 0,
+    "intellect": 0,
+    
+    "bureaucracy":     { "aspect": "cunning", "value": 0 },
+    "engineering":     { "aspect": "intellect", "value": 0 },
+    "history":         { "aspect": "intellect", "value": 0 },
+    "literacy":        { "aspect": "intellect", "value": 0 },
+    "mathematics":     { "aspect": "intellect", "value": 0 },
+    "music":           { "aspect": "charm", "value": 0 },
+
+    "flexible":        { "aspect": "grace", "value": 0 },
+    "grappling":       { "aspect": "speed", "value": 0 },
+    "heavymelee":      { "aspect": "might", "value": 0 },
+    "martial arts":    { "aspect": "speed", "value": 0 },
+    "melee":           { "aspect": "might", "value": 0 },
+    "pneumatic":       { "aspect": "might", "value": 0 },
+    "pugilism":        { "aspect": "might", "value": 0 },
+    
+    "alchemistry":     { "aspect": "intellect", "value": 0 },
+    "art":             { "aspect": "cunning", "value": 0 },
+    "artefacting":     { "aspect": "intellect", "value": 0 },
+    "blacksmithing":   { "aspect": "intellect", "value": 0 },
+    "culinary":        { "aspect": "charm", "value": 0 },
+    "explosives":      { "aspect": "intellect", "value": 0 },
+    "homesteading":    { "aspect": "tenacity", "value": 0 },
+    "printing":        { "aspect": "intellect", "value": 0 },
+    "stitching":       { "aspect": "tenacity", "value": 0 },
+
+    "doctor":          { "aspect": "intellect", "value": 0 },
+    "forgery":         { "aspect": "cunning", "value": 0 },
+    "gambling":        { "aspect": "cunning", "value": 0 },
+    "husbandry":       { "aspect": "charm", "value": 0 },
+    "lockpicking":     { "aspect": "grace", "value": 0 },
+    "notice":          { "aspect": "cunning", "value": 0 },
+    "track":           { "aspect": "cunning", "value": 0 },
+    "wilderness":      { "aspect": "cunning", "value": 0 },
+
+    "counterspelling": { "aspect": "tenacity", "value": 0 },
+    "enchanting":      { "aspect": "charm", "value": 0 },
+    "necromancy":      { "aspect": "charm", "value": 0 },
+    "sorcery":         { "aspect": "intellect", "value": 0 },
+    "prestidigiation": { "aspect": "cunning", "value": 0 },
+
+    "archery":         { "aspect": "grace", "value": 0 },
+    "heavyguns":       { "aspect": "might", "value": 0 },
+    "long arms":       { "aspect": "intellect", "value": 0 },
+    "pistol":          { "aspect": "grace", "value": 0 },
+    "shotgun":         { "aspect": "grace", "value": 0 },
+    "thrown weapons":  { "aspect": "grace", "value": 0 },
+
+    "barter":          { "aspect": "tenacity", "value": 0 },
+    "bewitch":         { "aspect": "charm", "value": 0 },
+    "convince":        { "aspect": "intellect", "value": 0 },
+    "deceive":         { "aspect": "cunning", "value": 0 },
+    "intimidate":      { "aspect": "tenacity", "value": 0 },
+    "leadership":      { "aspect": "charm", "value": 0 },
+    "scrutiny":        { "aspect": "cunning", "value": 0 },
+
+    "acrobatics":      { "aspect": "grace", "value": 0 },
+    "athletics":       { "aspect": "might", "value": 0 },
+    "carouse":         { "aspect": "resilience", "value": 0 },
+    "centering":       { "aspect": "tenacity", "value": 0 },
+    "evade":           { "aspect": "speed", "value": 0 },
+    "pickpocket":      { "aspect": "speed", "value": 0 },
+    "stealth":         { "aspect": "cunning", "value": 0 },
+    "toughness":       { "aspect": "resilience", "value": 0 },
+
+
+  }
+  fs.writeFile("./characters.json", JSON.stringify(bot.characters,null,4), err => {
+    if (err) throw err;
+  });
+
+}
+
+function setAttribute(userID,attribute,value){
+  if (typeof (bot.characters[userID][attribute]) === 'object' && bot.characters[userID][attribute] !== null) {
+    bot.characters[userID][attribute]["value"] = value
+  } else {
+    bot.characters[userID][attribute] = value    
+  }
+
+
+  fs.writeFile("./characters.json", JSON.stringify(bot.characters,null,4), err => {
+    if (err) throw err;
+  });
+
+}
+
+// createUser("232633917876862987");
+// setAttribute("232633917876862987", "might", 3);
+// setAttribute("232633917876862987", "bewitch", 3);
+// console.log(typeof(bot.characters["test_kit"]));
+
+
+//End User Functions
 
 
 
