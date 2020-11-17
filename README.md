@@ -1,30 +1,36 @@
 # wyrd-bot
-a Discord bot used to simulate a fate deck and player twist decks for the Through the Breach RPG
+
+a Discord bot used to simulate a fate deck and player twist decks for the Through the Breach RPG. You can also use it to store character attributes and skills, which can be used when flipping cards from the fate deck.
 
 # Getting Started
+
 1. Install Node.js v12.3.0 or newer
 2. Clone the repo
 
 # Configuration
-1. Create a `config.json` file and fill out the values (you can copy and paste the below as a template). The "fatemaster_id" is used to grant shuffle permission for the fate deck.
-      ```JSON
-      {
-        "prefix"          :"!",
-        "token"           :"",
-        "suits"           : ["masks","rams","crows","tomes"],
-        "values"          : [1,2,3,4,5,6,7,8,9,10,11,12,13],
-        "definingValues"  : [1,5,9,13],
-        "ascendantValues" : [4,8,12],
-        "centerValues"    : [3,7,11],
-        "descendantValues": [2,6,10],
-        "fatemaster_id"   : "[Use your ID]"
-        }
-    ```
 
+1. Create a `config.json` file and fill out the values (you can copy and paste the below as a template). The "fatemaster_id" is used to grant shuffle permission for the fate deck.
+
+   ```JSON
+   {
+     "prefix"          :"!",
+     "token"           :"",
+     "suits"           : ["masks","rams","crows","tomes"],
+     "values"          : [1,2,3,4,5,6,7,8,9,10,11,12,13],
+     "definingValues"  : [1,5,9,13],
+     "ascendantValues" : [4,8,12],
+     "centerValues"    : [3,7,11],
+     "descendantValues": [2,6,10],
+     "fatemaster_id"   : "[Use your ID]"
+     }
+   ```
 
 2. Run the bot using `Node .`
 
 # Features & Commands
+
+`!help` will send you a private message with a list of possible commands
+
 `!flip` flips a card from the fate deck. You can add a number after the flip for multiple. `!flip 2` will flip over 2 cards, for example. Wyrd Bot reshuffles the discard pile back into the deck when there are no more cards.
 
 `!shuffle` shuffles the fate deck. This is limited to fatemasters.
@@ -38,4 +44,3 @@ a Discord bot used to simulate a fate deck and player twist decks for the Throug
 `!discard` will discard a card from your control hand.
 
 `!draw` will draw a card from your twist deck into your contorl hand. `!draw 3` will draw 3 cards into your hand.
-
