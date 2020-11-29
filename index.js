@@ -20,7 +20,15 @@ const fate_shuffle_command = {
     if (isFM(message.author.id)){
       fate_deck = readDeck(0);
       shuffle(fate_deck);
+      console.log(fate_deck);
       writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
+      message.channel.send("deck shuffled");
+    } else {
+      twist_deck = readDeck(message.author.id);
+      shuffle(twist_deck);
+      console.log(twist_deck);
+      writeDeck(0, twist_deck.cards, twist_deck.hand, twist_deck.discard);
+      console.log("twist deck shuffled.");
     }
   }
 }
@@ -32,16 +40,11 @@ const fate_flip_command = {
   description: "flips a number of cards from the fate deck",
   execute(message,args) {
     num = Number(args[0]);
-    if (isNaN(num)) {
-      skillname = args[0]
-      skill  = bot.characters[message.author.id][skillname]
-      aspect = bot.characters[message.author.id][skill["aspect"]]
-      num = Number(args[1]);      
-    }
-
     if (!num > 0) {
       num = 1;
     }
+    console.log(num);
+
     fate_deck = readDeck(0);
 
 
@@ -50,7 +53,7 @@ const fate_flip_command = {
     );
 
     writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
-    message.channel.send("cards flipped for "+skillname +" ("+(Number(skill["value"])+aspect)+"): " + flippedCards);
+          message.channel.send("cards flipped: " + flippedCards);
   }
 }
 bot.commands.set(fate_flip_command.name, fate_flip_command);
@@ -118,7 +121,7 @@ const twist_draw_command = {
     // if (isFM(message.author.id)) return;
     twist_deck = readDeck(message.author.id)
     num = parseInt(args[0])
-    if (num === 0) {
+    if (!(num > 0)) {
       num = 1;
     }
     draw(twist_deck, num);
@@ -138,7 +141,7 @@ const twist_discard_command = {
       // message.channel.send("You don't have that card.");
       return;
     };
-    message.channel.send(author.username+" discarded: "+cheatedCard.value+" of "+cheatedCard.suit);
+    message.channel.send(message.author.username+" discarded: "+cheatedCard.value+" of "+cheatedCard.suit);
     writeDeck(message.author.id,twist_deck.cards,twist_deck.hand,twist_deck.discard)
   }
 }
@@ -300,6 +303,10 @@ function createDeck(suits, values, center, descendant) {
 
 
 function shuffle(deck) {
+  deck.cards = deck.cards.concat(deck.discard)
+  deck.cards = deck.cards.concat(deck.hand)
+  deck.discard = []
+  deck.hand = []
   for (var i = 0; i < 1000; i++) {
     var randomLocation = Math.floor(Math.random() * deck.cards.length);
     var temp = deck.cards[0];
@@ -307,7 +314,6 @@ function shuffle(deck) {
     deck.cards[randomLocation] = temp;
   }
 }
-
 
 
 
