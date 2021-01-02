@@ -3,6 +3,7 @@ const { prefix, token, suits, values, fatemaster_id } = require("./config.json")
 bot = new Discord.Client();
 const fs = require("fs");
 const { type } = require("os");
+const { Console } = require("console");
 bot.decks = require("./decks.json");
 bot.characters = require("./characters.json");
 
@@ -14,7 +15,7 @@ bot.commands = new Discord.Collection();
 
 const fate_shuffle_command = {
   name: "shuffle",
-  description: "shuffles the fate deck",
+  description: "shuffles the twist deck (or fate deck if you're the FM)",
   execute(message, args) {
     console.log(isFM(message.author.id));
     if (isFM(message.author.id)){
@@ -53,7 +54,10 @@ const fate_flip_command = {
     );
 
     writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
-          message.channel.send("cards flipped: " + flippedCards);
+    message.channel.send("cards flipped: " + flippedCards);
+    console.log(fate_deck.cards.length)
+    console.log(fate_deck.hand.length)
+    console.log(fate_deck.discard.length)
   }
 }
 bot.commands.set(fate_flip_command.name, fate_flip_command);
@@ -388,6 +392,7 @@ function flip(deck, numflips) {
     if (deck.cards.length <= 0) {
       if (deck.discard.length <= 0) break;
       deck.cards = deck.discard;
+      deck.discard = []
       shuffle(deck);
     }
     var pulledCard = deck.cards.shift();
