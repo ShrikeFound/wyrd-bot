@@ -72,13 +72,20 @@ const twist_initialize_command = {
     let ascendant_suit = args[1] || "unknown";
     let center_suit = args[2] || "unknown";
     let descendant_suit = args[3] || "unknown";
-    
+    console.log(args)
     twist_deck = createDeck(definining_suit, ascendant_suit, center_suit, descendant_suit);
 
     //move 3 cards to to the player's hand
     draw(twist_deck, 3);
     writeDeck(message.author.id, twist_deck.cards, twist_deck.hand, twist_deck.discard);
-
+    //parse hand & discard, show in message to user
+   hand = twist_deck.hand.map(
+      (card) => card.value + " of " + card.suit
+    );
+    discard = twist_deck.discard.map(
+      (card) => card.value + " of " + card.suit
+    );
+    message.author.send(message.author.username+ "'s hand: "+hand +"\n"+message.author.username+"'s discard pile: "+discard);
   },
 };
 bot.commands.set(twist_initialize_command.name, twist_initialize_command);
@@ -130,6 +137,14 @@ const twist_draw_command = {
     }
     draw(twist_deck, num);
     writeDeck(message.author.id, twist_deck.cards, twist_deck.hand, twist_deck.discard);
+    //parse hand & discard, show in message to user
+    hand = twist_deck.hand.map(
+      (card) => card.value + " of " + card.suit
+    );
+    discard = twist_deck.discard.map(
+      (card) => card.value + " of " + card.suit
+    );
+    message.author.send(message.author.username+ "'s hand: "+hand +"\n"+message.author.username+"'s discard pile: "+discard);
   }
 }
 bot.commands.set(twist_draw_command.name, twist_draw_command);
@@ -146,7 +161,14 @@ const twist_discard_command = {
       return;
     };
     message.channel.send(message.author.username+" discarded: "+cheatedCard.value+" of "+cheatedCard.suit);
-    writeDeck(message.author.id,twist_deck.cards,twist_deck.hand,twist_deck.discard)
+    //parse hand & discard, show in message to user
+    hand = twist_deck.hand.map(
+      (card) => card.value + " of " + card.suit
+    );
+    discard = twist_deck.discard.map(
+      (card) => card.value + " of " + card.suit
+    );
+    message.author.send(message.author.username+ "'s hand: "+hand +"\n"+message.author.username+"'s discard pile: "+discard);
   }
 }
 bot.commands.set(twist_discard_command.name,twist_discard_command)
@@ -166,7 +188,15 @@ const twist_cheat_command = {
       return;
     };
     message.channel.send(message.author.username +" cheated with: "+cheatedCard.value+" of "+cheatedCard.suit);
-    writeDeck(message.author.id,twist_deck.cards,twist_deck.hand,twist_deck.discard)
+    writeDeck(message.author.id, twist_deck.cards, twist_deck.hand, twist_deck.discard)
+   //parse hand & discard, show in message to user
+    hand = twist_deck.hand.map(
+      (card) => card.value + " of " + card.suit
+    );
+    discard = twist_deck.discard.map(
+      (card) => card.value + " of " + card.suit
+    );
+    message.author.send(message.author.username+ "'s hand: "+hand +"\n"+message.author.username+"'s discard pile: "+discard);
   }
 }
 bot.commands.set(twist_cheat_command.name,twist_cheat_command)
@@ -255,7 +285,7 @@ function findSuit(string) {
       suit = "tomes";
       break;
     default:
-      suit = "unknown";
+      suit = "outcasts";
       break;
   }
   return suit;
@@ -520,11 +550,16 @@ function setAttribute(userID,attribute,value){
 
 
 bot.once("ready", () => {
-  fate_deck = createDeck(suits, values);
-  writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
+  let fate_deck = readDeck(0);
+  if (fate_deck) {
+    console.log("bot running, deck already existed");
+  } else {
+    console.log("fate deck doesn't exist");
+    fate_deck = createDeck(suits, values);
+    writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
+    console.log("fate deck initialized");
+  }
   bot.user.setActivity('type "!help" for a list of commands');
-  console.log("bot ready!");
-  // console.log(bot.commands);
 });
 
 bot.on("message", (message) => {
