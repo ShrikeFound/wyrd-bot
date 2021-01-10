@@ -347,6 +347,7 @@ function shuffle(deck) {
     deck.cards[0] = deck.cards[randomLocation];
     deck.cards[randomLocation] = temp;
   }
+  console.log(deck.cards.length)
 }
 
 

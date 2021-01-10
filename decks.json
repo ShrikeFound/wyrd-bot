@@ -3,215 +3,48 @@
         "cards": [
             {
                 "value": 7,
-                "suit": "masks"
-            },
-            {
-                "value": 12,
                 "suit": "tomes"
-            },
-            {
-                "value": 9,
-                "suit": "rams"
-            },
-            {
-                "value": 2,
-                "suit": "rams"
-            },
-            {
-                "value": 8,
-                "suit": "crows"
-            },
-            {
-                "value": 1,
-                "suit": "crows"
-            },
-            {
-                "value": 6,
-                "suit": "crows"
-            },
-            {
-                "value": 8,
-                "suit": "rams"
-            },
-            {
-                "value": 13,
-                "suit": "rams"
-            },
-            {
-                "value": 11,
-                "suit": "tomes"
-            },
-            {
-                "value": 12,
-                "suit": "masks"
-            },
-            {
-                "value": 4,
-                "suit": "masks"
-            },
-            {
-                "value": 1,
-                "suit": "rams"
-            },
-            {
-                "value": 6,
-                "suit": "masks"
-            },
-            {
-                "value": 6,
-                "suit": "tomes"
-            },
-            {
-                "value": 4,
-                "suit": "crows"
-            },
-            {
-                "value": 7,
-                "suit": "rams"
-            },
-            {
-                "value": 12,
-                "suit": "crows"
             },
             {
                 "value": 5,
-                "suit": "tomes"
-            },
-            {
-                "value": 8,
-                "suit": "tomes"
-            },
-            {
-                "value": 10,
-                "suit": "tomes"
-            },
-            {
-                "value": 2,
-                "suit": "tomes"
-            },
-            {
-                "value": 10,
-                "suit": "crows"
-            },
-            {
-                "value": 5,
-                "suit": "rams"
-            },
-            {
-                "value": 13,
-                "suit": "crows"
-            },
-            {
-                "value": 5,
-                "suit": "crows"
-            },
-            {
-                "value": 5,
-                "suit": "masks"
-            },
-            {
-                "value": 3,
-                "suit": "tomes"
-            },
-            {
-                "value": 9,
-                "suit": "crows"
-            },
-            {
-                "value": 6,
-                "suit": "rams"
-            },
-            {
-                "value": 4,
-                "suit": "tomes"
-            },
-            {
-                "value": 11,
-                "suit": "masks"
-            },
-            {
-                "value": 13,
-                "suit": "tomes"
-            },
-            {
-                "value": 11,
-                "suit": "crows"
-            },
-            {
-                "value": 7,
-                "suit": "tomes"
-            },
-            {
-                "value": 2,
-                "suit": "crows"
-            },
-            {
-                "value": 12,
-                "suit": "rams"
-            },
-            {
-                "value": 2,
-                "suit": "masks"
-            },
-            {
-                "value": 10,
-                "suit": "rams"
-            },
-            {
-                "value": 7,
-                "suit": "crows"
-            },
-            {
-                "value": 3,
-                "suit": "rams"
-            },
-            {
-                "value": 13,
-                "suit": "masks"
-            },
-            {
-                "value": 1,
-                "suit": "tomes"
-            },
-            {
-                "value": 1,
-                "suit": "masks"
-            },
-            {
-                "value": 8,
-                "suit": "masks"
-            },
-            {
-                "value": 10,
-                "suit": "masks"
-            },
-            {
-                "value": 9,
-                "suit": "tomes"
-            },
-            {
-                "value": 3,
-                "suit": "masks"
-            },
-            {
-                "value": 9,
-                "suit": "masks"
-            },
-            {
-                "value": 3,
-                "suit": "crows"
-            },
-            {
-                "value": 4,
-                "suit": "rams"
-            },
-            {
-                "value": 11,
                 "suit": "rams"
             }
         ],
         "hand": [],
-        "discard": []
+        "discard": [
+            {
+                "value": 9,
+                "suit": "rams"
+            },
+            {
+                "value": 6,
+                "suit": "crows"
+            },
+            {
+                "value": 8,
+                "suit": "masks"
+            },
+            {
+                "value": 12,
+                "suit": "masks"
+            },
+            {
+                "value": 4,
+                "suit": "masks"
+            },
+            {
+                "value": 11,
+                "suit": "tomes"
+            },
+            {
+                "value": 3,
+                "suit": "tomes"
+            },
+            {
+                "value": 2,
+                "suit": "crows"
+            }
+        ]
     },
     "97494000000323584": {
         "cards": [
@@ -276,15 +109,7 @@
     "401570420479885322": {
         "cards": [
             {
-                "value": 13,
-                "suit": "tomes"
-            },
-            {
-                "value": 2,
-                "suit": "crows"
-            },
-            {
-                "value": 1,
+                "value": 5,
                 "suit": "tomes"
             },
             {
@@ -292,12 +117,16 @@
                 "suit": "masks"
             },
             {
-                "value": 8,
-                "suit": "masks"
+                "value": 1,
+                "suit": "tomes"
             },
             {
-                "value": 5,
-                "suit": "tomes"
+                "value": 10,
+                "suit": "crows"
+            },
+            {
+                "value": 6,
+                "suit": "crows"
             },
             {
                 "value": 11,
@@ -306,102 +135,138 @@
         ],
         "hand": [
             {
-                "value": 6,
+                "value": 2,
                 "suit": "crows"
-            }
-        ],
-        "discard": [
+            },
+            {
+                "value": 8,
+                "suit": "masks"
+            },
             {
                 "value": 9,
                 "suit": "tomes"
             },
             {
-                "value": 10,
-                "suit": "crows"
+                "value": 13,
+                "suit": "tomes"
             }
-        ]
+        ],
+        "discard": []
     },
     "186606328393891840": {
         "cards": [
             {
-                "value": 2,
-                "suit": "masks"
-            },
-            {
-                "value": 6,
-                "suit": "masks"
-            },
-            {
-                "value": 6,
-                "suit": "masks"
-            },
-            {
-                "value": 7,
-                "suit": "rams"
-            }
-        ],
-        "hand": [],
-        "discard": [
-            {
-                "value": 7,
-                "suit": "rams"
-            }
-        ]
-    },
-    "197588540811509760": {
-        "cards": [
-            {
-                "value": 11,
-                "suit": "tomes"
-            },
-            {
-                "value": 5,
+                "value": 9,
                 "suit": "rams"
             },
             {
                 "value": 12,
-                "suit": "masks"
-            },
-            {
-                "value": 2,
                 "suit": "crows"
             },
             {
-                "value": 4,
-                "suit": "masks"
-            },
-            {
-                "value": 9,
-                "suit": "rams"
+                "value": 8,
+                "suit": "crows"
             },
             {
                 "value": 3,
                 "suit": "tomes"
             },
             {
-                "value": 8,
+                "value": 6,
                 "suit": "masks"
             },
+            {
+                "value": 7,
+                "suit": "tomes"
+            },
+            {
+                "value": 10,
+                "suit": "masks"
+            },
+            {
+                "value": 13,
+                "suit": "rams"
+            },
+            {
+                "value": 5,
+                "suit": "rams"
+            }
+        ],
+        "hand": [
             {
                 "value": 1,
                 "suit": "rams"
             },
             {
-                "value": 7,
-                "suit": "tomes"
-            }
-        ],
-        "hand": [
+                "value": 2,
+                "suit": "masks"
+            },
             {
-                "value": 6,
+                "value": 4,
                 "suit": "crows"
             }
         ],
         "discard": [
             {
-                "value": 13,
+                "value": 11,
+                "suit": "tomes"
+            }
+        ]
+    },
+    "197588540811509760": {
+        "cards": [
+            {
+                "value": 7,
+                "suit": "tomes"
+            },
+            {
+                "value": 2,
+                "suit": "crows"
+            },
+            {
+                "value": 3,
+                "suit": "tomes"
+            },
+            {
+                "value": 4,
+                "suit": "masks"
+            },
+            {
+                "value": 8,
+                "suit": "masks"
+            },
+            {
+                "value": 5,
                 "suit": "rams"
             },
+            {
+                "value": 11,
+                "suit": "tomes"
+            },
+            {
+                "value": 9,
+                "suit": "rams"
+            },
+            {
+                "value": 6,
+                "suit": "crows"
+            },
+            {
+                "value": 12,
+                "suit": "masks"
+            }
+        ],
+        "hand": [
+            {
+                "value": 1,
+                "suit": "rams"
+            },
+            {
+                "value": 13,
+                "suit": "rams"
+            }
+        ],
+        "discard": [
             {
                 "value": 10,
                 "suit": "crows"
