@@ -4,6 +4,7 @@ bot = new Discord.Client();
 const fs = require("fs");
 const { type } = require("os");
 const { Console } = require("console");
+const fetch = require('node-fetch');
 bot.decks = require("./decks.json");
 bot.characters = require("./characters.json");
 
@@ -547,10 +548,16 @@ function setAttribute(userID,attribute,value){
 
 
 //End User Functions
-
+const test = async (id) => {
+  const response = await fetch(`https://arcane-scrubland-02167.herokuapp.com/characters/${id}.json`);
+  const json = await response.json();
+  console.log(json);
+  console.log(json['name']);
+}
 
 
 bot.once("ready", () => {
+  test(1);
   let fate_deck = readDeck(0);
   if (fate_deck) {
     console.log("bot running, deck already existed");
@@ -561,6 +568,7 @@ bot.once("ready", () => {
     console.log("fate deck initialized");
   }
   bot.user.setActivity('type "!help" for a list of commands');
+
 });
 
 bot.on("message", (message) => {
