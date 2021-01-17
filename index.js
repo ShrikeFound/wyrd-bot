@@ -306,9 +306,9 @@ const get_character_command = {
       });
       const skill = args[0];
       console.log(skill);
-      const result = await json;
+      const result = await JSON.stringify(json[skill]);
       console.log(result);
-      message.channel.send("json: " + JSON.stringify(result));
+      message.channel.send(skill+":" + result);
       console.log("done");
     };
     async_command(message, args);
