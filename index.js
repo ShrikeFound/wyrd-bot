@@ -305,10 +305,10 @@ const get_character_command = {
         };
       });
       const skill = args[0];
-      console.log(skill);
-      const result = await JSON.stringify(json[skill]);
-      console.log(result);
-      message.channel.send(skill+":" + result);
+      const result = await json;
+      const skill_rank = parseInt(result[skill]["rank"]);
+      const aspect_rank = parseInt(result[result[skill]["aspect"]]);
+      message.channel.send(skill + ":" + (skill_rank + aspect_rank));
       console.log("done");
     };
     async_command(message, args);
