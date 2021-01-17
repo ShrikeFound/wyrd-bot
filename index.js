@@ -287,6 +287,35 @@ const help_command = {
 };
 bot.commands.set(help_command.name, help_command);
 
+const get_character_command = {
+  name: "review",
+  description: "gets character stuff",
+  execute(message, args) {
+    const async_command = async (message, args) => {
+      const response = await fetch(
+        `https://arcane-scrubland-02167.herokuapp.com/api/${message.author.id}`
+      );
+      const json = await response.json().catch((error) => {
+        console.error(
+          `Character with api_id: '${message.author.id}' Not Found.`
+        );
+        return {
+          error: 404,
+          message: `Character with api_id: '${message.author.id}' Not Found.`,
+        };
+      });
+      const skill = args[0];
+      console.log(skill);
+      const result = await json;
+      console.log(result);
+      message.channel.send("json: " + JSON.stringify(result));
+      console.log("done");
+    };
+    async_command(message, args);
+  },
+};
+bot.commands.set(get_character_command.name, get_character_command);
+
 //bot commands end -----------------------------
 
 function findSuit(string) {
@@ -434,16 +463,7 @@ function isFM(id) {
   return fatemaster_id === id;
 }
 
-const test = async (id) => {
-  const response = await fetch(
-    `https://arcane-scrubland-02167.herokuapp.com/api/${id}`
-  );
-  const json = await response.json();
-  console.log(json);
-};
-
 bot.once("ready", () => {
-  test(1);
   let fate_deck = readDeck(0);
   if (fate_deck) {
     console.log("bot running, deck already existed");
@@ -456,7 +476,7 @@ bot.once("ready", () => {
   bot.user.setActivity('type "!help" for a list of commands');
 });
 
-bot.on("message", (message) => {
+bot.on("message", async (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
   const args = message.content.slice(prefix.length).split(" ");
   const commandName = args.shift().toLowerCase();
