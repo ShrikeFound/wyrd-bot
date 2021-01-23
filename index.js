@@ -101,15 +101,16 @@ const new_fate_flip_command = {
         activeValue = skillRank;
       } else {
         //do nothing
+        console.log(`${skillRank} was weird.`);
       }
       flippedCards = flip(fate_deck, num).map(
         (card) => `${card.value}(${card.value + activeValue}) of ${card.suit}`
       );
-
       writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
       message.channel.send(
-        `active value: ${activeValue} \n cards flipped: ${flippedCards}`
+        `**${result.name}'s acting value:** ${activeValue} \n**Cards flipped:** ${flippedCards}`
       );
+      console.log(num);
       console.log(` fate deck length: ${fate_deck.cards.length}`);
       console.log(` fate hand length: ${fate_deck.hand.length}`);
       console.log(` fate discard length: ${fate_deck.discard.length}`);
