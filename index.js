@@ -39,8 +39,8 @@ const fate_shuffle_command = {
 };
 bot.commands.set(fate_shuffle_command.name, fate_shuffle_command);
 
-const fate_flip_command = {
-  name: "flip",
+const old_fate_flip_command = {
+  name: "oldflip",
   description: "flips a number of cards from the fate deck",
   execute(message, args) {
     num = Number(args[0]);
@@ -62,10 +62,10 @@ const fate_flip_command = {
     console.log(fate_deck.discard.length);
   },
 };
-bot.commands.set(fate_flip_command.name, fate_flip_command);
+bot.commands.set(old_fate_flip_command.name, old_fate_flip_command);
 
-const new_fate_flip_command = {
-  name: "testflip",
+const fate_flip_command = {
+  name: "flip",
   description: "flips a number of cards from the fate deck",
   execute(message, args) {
     const test = async (message, args) => {
@@ -74,7 +74,11 @@ const new_fate_flip_command = {
       if (!num > 0) {
         num = 1;
       }
-      const skillName = argString.match(/[\D]+/g).toString().trim();
+      let skillName = argString.match(/[\D]+/g);
+      if (skillName) {
+        skillName = skillName.toString().trim().toLowerCase();
+      }
+      console.log(skillName);
       fate_deck = readDeck(0);
       const response = await fetch(
         `https://arcane-scrubland-02167.herokuapp.com/api/${message.author.id}`
@@ -107,18 +111,23 @@ const new_fate_flip_command = {
         (card) => `${card.value}(${card.value + activeValue}) of ${card.suit}`
       );
       writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
-      message.channel.send(
-        `**${result.name}'s ${skillName} acting value:** ${activeValue} \n**Cards flipped:** ${flippedCards}`
-      );
+      console.log(result);
+      let reply;
+      if (result["error"] === 404) {
+        reply = `**Cards flipped:** ${flippedCards}`;
+      } else {
+        reply = `**${result.name}'s acting value:** ${activeValue} \n**Cards flipped:** ${flippedCards}`;
+      }
+      message.channel.send(reply);
       console.log(num);
-      console.log(`fate deck length: ${fate_deck.cards.length}`);
-      console.log(`fate hand length: ${fate_deck.hand.length}`);
-      console.log(`fate discard length: ${fate_deck.discard.length}`);
+      console.log(` fate deck length: ${fate_deck.cards.length}`);
+      console.log(` fate hand length: ${fate_deck.hand.length}`);
+      console.log(` fate discard length: ${fate_deck.discard.length}`);
     };
     test(message, args);
   },
 };
-bot.commands.set(new_fate_flip_command.name, new_fate_flip_command);
+bot.commands.set(fate_flip_command.name, fate_flip_command);
 
 const twist_initialize_command = {
   name: "create",
@@ -428,8 +437,6 @@ function createDeck(suits, values, center, descendant) {
         deck.cards.push(card);
       }
     }
-    deck.cards.push({ value: 0, suit: "Black Joker" });
-    deck.cards.push({ value: 14, suit: "Red Joker" });
   }
   shuffle(deck);
   return deck;
@@ -521,19 +528,19 @@ function isFM(id) {
   return fatemaster_id === id;
 }
 
-// const fetchData = async (message, args) => {
-//   const response = await fetch(
-//     `https://arcane-scrubland-02167.herokuapp.com/api/${message.author.id}`
-//   );
-//   const json = await response.json().catch((error) => {
-//     console.error(`Character with api_id: '${message.author.id}' Not Found.`);
-//     return {
-//       error: 404,
-//       message: `Character with api_id: '${message.author.id}' Not Found.`,
-//     };
-//   });
-//   return json;
-// };
+const fetchData = async (message, args) => {
+  const response = await fetch(
+    `https://arcane-scrubland-02167.herokuapp.com/api/${message.author.id}`
+  );
+  const json = await response.json().catch((error) => {
+    console.error(`Character with api_id: '${message.author.id}' Not Found.`);
+    return {
+      error: 404,
+      message: `Character with api_id: '${message.author.id}' Not Found.`,
+    };
+  });
+  return json;
+};
 
 bot.once("ready", () => {
   let fate_deck = readDeck(0);
