@@ -108,12 +108,12 @@ const new_fate_flip_command = {
       );
       writeDeck(0, fate_deck.cards, fate_deck.hand, fate_deck.discard);
       message.channel.send(
-        `**${result.name}'s acting value:** ${activeValue} \n**Cards flipped:** ${flippedCards}`
+        `**${result.name}'s ${skillName} acting value:** ${activeValue} \n**Cards flipped:** ${flippedCards}`
       );
       console.log(num);
-      console.log(` fate deck length: ${fate_deck.cards.length}`);
-      console.log(` fate hand length: ${fate_deck.hand.length}`);
-      console.log(` fate discard length: ${fate_deck.discard.length}`);
+      console.log(`fate deck length: ${fate_deck.cards.length}`);
+      console.log(`fate hand length: ${fate_deck.hand.length}`);
+      console.log(`fate discard length: ${fate_deck.discard.length}`);
     };
     test(message, args);
   },
@@ -428,6 +428,8 @@ function createDeck(suits, values, center, descendant) {
         deck.cards.push(card);
       }
     }
+    deck.cards.push({ value: 0, suit: "Black Joker" });
+    deck.cards.push({ value: 14, suit: "Red Joker" });
   }
   shuffle(deck);
   return deck;
@@ -519,19 +521,19 @@ function isFM(id) {
   return fatemaster_id === id;
 }
 
-const fetchData = async (message, args) => {
-  const response = await fetch(
-    `https://arcane-scrubland-02167.herokuapp.com/api/${message.author.id}`
-  );
-  const json = await response.json().catch((error) => {
-    console.error(`Character with api_id: '${message.author.id}' Not Found.`);
-    return {
-      error: 404,
-      message: `Character with api_id: '${message.author.id}' Not Found.`,
-    };
-  });
-  return json;
-};
+// const fetchData = async (message, args) => {
+//   const response = await fetch(
+//     `https://arcane-scrubland-02167.herokuapp.com/api/${message.author.id}`
+//   );
+//   const json = await response.json().catch((error) => {
+//     console.error(`Character with api_id: '${message.author.id}' Not Found.`);
+//     return {
+//       error: 404,
+//       message: `Character with api_id: '${message.author.id}' Not Found.`,
+//     };
+//   });
+//   return json;
+// };
 
 bot.once("ready", () => {
   let fate_deck = readDeck(0);
