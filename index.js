@@ -437,6 +437,8 @@ function createDeck(suits, values, center, descendant) {
         deck.cards.push(card);
       }
     }
+    deck.cards.push({ value: 0, suit: "Black Joker" })
+    deck.cards.push({value: 14, suit: "Red Joker" })
   }
   shuffle(deck);
   return deck;
